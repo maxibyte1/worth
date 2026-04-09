@@ -7,6 +7,7 @@ import asyncio
 import logging
 import os
 import sys
+import urllib.request
 from datetime import datetime, timezone
 
 from binance.client import Client
@@ -43,6 +44,13 @@ class TradingEngine:
     def __init__(self):
         # Load persisted settings (overrides .env with saved Telegram changes)
         config.load_settings()
+        # Log server IP so it can be added to Binance trusted IPs
+        try:
+            ip = urllib.request.urlopen("https://api.ipify.org").read().decode()
+            logger.info(f"Server IP: {ip}")
+        except Exception:
+            pass
+
         logger.info("=" * 60)
         logger.info("  Worth AI Trading Bot Starting...")
         logger.info(f"  Mode: {config.TRADING_MODE.upper()}")
