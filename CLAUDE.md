@@ -15,6 +15,7 @@ Automated crypto futures trading bot on Binance with Telegram interface, copy tr
 - **No bugs** — test edge cases, handle errors gracefully, don't break existing functionality
 - **Don't over-engineer** — keep changes minimal and focused
 - **Follow existing patterns** — match the code style already in the project
+- **No co-author lines** — never add "Co-Authored-By" to commit messages
 
 ## Tech Stack
 - Python 3.11+

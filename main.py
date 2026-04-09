@@ -51,18 +51,23 @@ class TradingEngine:
         logger.info("=" * 60)
 
         # Initialize Binance client
-        if config.TRADING_MODE == "paper" and (not config.BINANCE_API_KEY):
-            logger.warning("No API keys found. Using testnet for paper trading.")
-            self.client = Client(
-                config.BINANCE_API_KEY,
-                config.BINANCE_API_SECRET,
-                testnet=True,
-            )
-        else:
-            self.client = Client(
-                config.BINANCE_API_KEY,
-                config.BINANCE_API_SECRET,
-            )
+        self.client = None
+        try:
+            if config.TRADING_MODE == "paper" and (not config.BINANCE_API_KEY):
+                logger.warning("No API keys found. Using testnet for paper trading.")
+                self.client = Client(
+                    config.BINANCE_API_KEY,
+                    config.BINANCE_API_SECRET,
+                    testnet=True,
+                )
+            else:
+                self.client = Client(
+                    config.BINANCE_API_KEY,
+                    config.BINANCE_API_SECRET,
+                )
+        except Exception as e:
+            logger.error(f"Binance connection failed: {e}")
+            logger.warning("Bot will start in Telegram-only mode. Trading disabled.")
 
         # Initialize components
         self.journal = TradeJournal()
