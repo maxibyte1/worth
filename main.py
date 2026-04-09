@@ -230,6 +230,36 @@ class TradingEngine:
         logger.info("Telegram bot started. Send /start to begin.")
         logger.info("Send /startbot to begin trading.")
 
+        # Set command menu
+        try:
+            from telegram import BotCommand
+            await app.bot.set_my_commands([
+                BotCommand("start", "Show all commands"),
+                BotCommand("status", "Bot status & account info"),
+                BotCommand("positions", "View open positions"),
+                BotCommand("pnl", "Today's P&L"),
+                BotCommand("performance", "Overall performance"),
+                BotCommand("weekly", "Weekly report"),
+                BotCommand("trades", "Recent trade history"),
+                BotCommand("chart", "P&L chart"),
+                BotCommand("close", "Close a position"),
+                BotCommand("closeall", "Close all positions"),
+                BotCommand("startbot", "Start trading"),
+                BotCommand("stopbot", "Stop trading"),
+                BotCommand("settings", "View current settings"),
+                BotCommand("mode", "Switch paper/live mode"),
+                BotCommand("pairs", "View trading pairs"),
+                BotCommand("risk", "View risk status"),
+                BotCommand("copytraders", "Copy trading status"),
+                BotCommand("copyadd", "Add a leader UID"),
+                BotCommand("copyremove", "Remove a leader"),
+                BotCommand("copyon", "Enable copy trading"),
+                BotCommand("copyoff", "Disable copy trading"),
+                BotCommand("copyscale", "Set copy trade scale"),
+            ])
+        except Exception as e:
+            logger.warning(f"Could not set command menu: {e}")
+
         # Send startup message
         try:
             await app.bot.send_message(
