@@ -224,10 +224,13 @@ class TelegramBot:
             direction = t.get("direction", "?")
             pnl = t.get("pnl", 0) or 0
 
+            exit_price = t.get('exit_price')
+            exit_text = f"Exit: `${exit_price:,.4f}`" if exit_price else "Status: Open"
+
             text += (
                 f"{status_emoji} *{t['symbol']}* {direction}\n"
                 f"  Entry: `${t['entry_price']:,.4f}`\n"
-                f"  {'Exit: `$' + f'{t[\"exit_price\"]:,.4f}' + '`' if t.get('exit_price') else 'Status: Open'}\n"
+                f"  {exit_text}\n"
                 f"  P&L: `${pnl:+.2f}`\n"
                 f"  Conf: `{t.get('confidence', 0):.0%}`\n\n"
             )
